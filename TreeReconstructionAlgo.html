@@ -15219,14 +15219,14 @@ The algorithm parameters:</p>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>n = 100, t = 3, q = 2, N = 9315
-Reconstructed [1 0 0 1 1 1 1 1 1 1 1 1 0 0 1 1 0 0 1 0 1 0 0 1 1 0 1 0 0 1 0 0 0 1 1 1 1
- 0 1 1 0 0 0 0 1 0 0 1 1 0 0 0 1 0 0 1 0 0 0 1 0 0 0 0 1 1 1 0 0 0 1 0 1 1
- 1 0 1 0 1 1 1 0 0 1 1 0 0 0 1 1 1 1 0 0 1 1 0 0 0 0]
-From [1 0 0 1 1 1 1 1 1 1 1 1 0 0 1 1 0 0 1 0 1 0 0 1 1 0 1 0 0 1 0 0 0 1 1 1 1
- 0 1 1 0 0 0 0 1 0 0 1 1 0 0 0 1 0 0 1 0 0 0 1 0 0 0 0 1 1 1 0 0 0 1 0 1 1
- 1 0 1 0 1 1 1 0 0 1 1 0 0 0 1 1 1 1 0 0 1 1 0 0 0 0]
+Reconstructed [1 1 1 1 0 0 0 1 1 0 0 1 1 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0 0 1
+ 1 1 1 0 0 0 1 1 0 1 0 0 0 0 1 0 1 1 0 0 0 1 0 1 1 0 0 0 0 0 0 1 1 0 0 0 0
+ 1 1 0 1 1 0 0 1 0 1 1 1 1 0 1 0 1 1 0 0 0 0 1 1 1 0]
+From [1 1 1 1 0 0 0 1 1 0 0 1 1 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0 0 1
+ 1 1 1 0 0 0 1 1 0 1 0 0 0 0 1 0 1 1 0 0 0 1 0 1 1 0 0 0 0 0 0 1 1 0 0 0 0
+ 1 1 0 1 1 0 0 1 0 1 1 1 1 0 1 0 1 1 0 0 0 0 1 1 1 0]
 True
-56.5 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
+23.3 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre>
 </div>
 </div>
@@ -15617,7 +15617,9 @@ The algorithm loops for $t$ times:</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it -r1 -n1 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it -r1 -n1
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">, t = </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s1">, q = </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s1">, N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">reconstructed_x</span> <span class="o">=</span> <span class="n">reconstruct_x_from_supersequences_tree</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">supersequences</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Reconstructed </span><span class="si">{</span><span class="n">reconstructed_x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;From </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -15643,14 +15645,15 @@ The algorithm loops for $t$ times:</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Reconstructed [0 1 0 1 0 0 0 1 0 0 1 1 1 1 1 0 0 0 1 0 1 1 0 0 0 0 1 1 1 0 0 1 1 1 1 1 1
- 0 0 1 1 1 0 0 1 0 1 0 1 1 1 0 0 0 0 1 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 1 1
- 0 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 1 0 1 1 0 0 1 1 1 1]
-From [0 1 0 1 0 0 0 1 0 0 1 1 1 1 1 0 0 0 1 0 1 1 0 0 0 0 1 1 1 0 0 1 1 1 1 1 1
- 0 0 1 1 1 0 0 1 0 1 0 1 1 1 0 0 0 0 1 1 0 1 1 0 1 0 1 1 0 1 0 1 1 0 1 1 1
- 0 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 1 0 1 1 0 0 1 1 1 1]
+<pre>n = 100, t = 3, q = 2, N = 10715
+Reconstructed [1 0 0 1 1 0 1 0 0 1 1 0 0 1 1 1 0 0 1 1 0 1 1 0 0 1 0 1 0 1 1 1 1 1 1 1 0
+ 0 0 0 1 0 0 1 0 1 1 0 0 0 0 1 1 0 0 1 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 0
+ 1 1 1 0 1 1 0 1 1 1 1 0 0 1 1 1 0 0 1 1 1 0 0 0 0 0]
+From [1 0 0 1 1 0 1 0 0 1 1 0 0 1 1 1 0 0 1 1 0 1 1 0 0 1 0 1 0 1 1 1 1 1 1 1 0
+ 0 0 0 1 0 0 1 0 1 1 0 0 0 0 1 1 0 0 1 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 0
+ 1 1 1 0 1 1 0 1 1 1 1 0 0 1 1 1 0 0 1 1 1 0 0 0 0 0]
 True
-107 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
+58.6 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre>
 </div>
 </div>
