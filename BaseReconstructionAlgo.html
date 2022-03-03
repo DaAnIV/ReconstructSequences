@@ -14781,10 +14781,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>x = [0 1 1 1 0 0 1 0 0 1]
-x&#39;s order permutation = [0 1]
-x&#39;s composition vector = [5 5]
-x&#39;s ordered composition = [5 5]
+<pre>x = [0 0 1 1 0 1 1 1 1 0]
+x&#39;s order permutation = [1 0]
+x&#39;s composition vector = [4 6]
+x&#39;s ordered composition = [6 4]
 </pre>
 </div>
 </div>
@@ -14923,13 +14923,13 @@ The algorithm parameters:</p>
 <li><strong>verbose</strong>       - control verbosity.</li>
 </ul>
 <p><strong>Complexity:</strong></p>
-<p>The algorithm loops $t$ times, in each iteration:</p>
+<p>The algorithm loops at most $n$ times, in each iteration:</p>
 <p>• call get_ordering, complexity $\leq O\left(N\right)$.</p>
 <p>• call get_subsequence_reconstruction_threshold, complexity $\leq O\left(nt\right)$.</p>
 <p>• concatenate, complexity $\leq O\left(n\right)$.</p>
 <p>• call get_maximal_number_of_common_subsequences, complexity $\leq O\left(nt\right)$.</p>
 <p>• call get_u_a_i (with i==1), complexity $\leq O\left(N\right)$.</p>
-<p>getting us in total a complexity of $O\left(Nt+nt^{2}\right)$.</p>
+<p>getting us in total a complexity of $O\left(Nn+n^2t\right)$.</p>
 
 </div>
 </div>
@@ -14942,16 +14942,19 @@ The algorithm parameters:</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">reconstruct_x_from_subsequences</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">subsequences</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">reconstruct_x_from_subsequences</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">subsequences</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="n">subsequences</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">reconstruction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">subsequences</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">subsequences</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">iteration_count</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="k">while</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">iteration_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">order_perm</span><span class="p">,</span> <span class="n">order_comp</span> <span class="o">=</span> <span class="n">get_ordering</span><span class="p">(</span><span class="n">subsequences</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q</span><span class="p">)</span>
         <span class="n">j</span> <span class="o">=</span> <span class="n">get_subsequence_reconstruction_threshold</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">order_comp</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
         <span class="n">reconstruction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">reconstruction</span><span class="p">,</span> <span class="n">order_perm</span><span class="p">[:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">reconstruction</span><span class="p">)</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span>
@@ -14959,9 +14962,12 @@ The algorithm parameters:</p>
         <span class="n">N</span> <span class="o">=</span> <span class="n">get_maximal_number_of_common_subsequences</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">q</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
         <span class="n">subsequences</span> <span class="o">=</span> <span class="n">get_u_a_i</span><span class="p">(</span><span class="n">subsequences</span><span class="p">,</span> <span class="n">order_perm</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">subsequences</span> <span class="o">=</span> <span class="n">subsequences</span><span class="p">[:,:</span><span class="n">N</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">subsequences</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         
+    <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Took </span><span class="si">{</span><span class="n">iteration_count</span><span class="si">}</span><span class="s1"> iterations&#39;</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">reconstruction</span><span class="p">,</span> <span class="n">subsequences</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 </pre></div>
 
@@ -15073,7 +15079,7 @@ The algorithm parameters:</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it -r1 -n1
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">, t = </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s1">, q = </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s1">, N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">reconstructed_x</span> <span class="o">=</span> <span class="n">reconstruct_x_from_subsequences</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">subsequences</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+<span class="n">reconstructed_x</span> <span class="o">=</span> <span class="n">reconstruct_x_from_subsequences</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">subsequences</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Reconstructed </span><span class="si">{</span><span class="n">reconstructed_x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;From </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">reconstructed_x</span><span class="p">))</span>
@@ -15099,14 +15105,16 @@ The algorithm parameters:</p>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>n = 100, t = 3, q = 2, N = 9315
-Reconstructed [1 1 1 0 0 1 1 0 1 0 0 1 0 1 1 0 0 1 0 0 0 0 0 1 1 1 1 1 1 0 1 1 1 0 1 0 0
- 1 0 0 1 0 1 1 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 1 1 0 0 1 1 1 0 0 1 0 0 1 1
- 1 0 0 1 1 0 1 1 0 1 1 0 0 1 1 0 0 1 1 0 1 1 1 0 0 1]
-From [1 1 1 0 0 1 1 0 1 0 0 1 0 1 1 0 0 1 0 0 0 0 0 1 1 1 1 1 1 0 1 1 1 0 1 0 0
- 1 0 0 1 0 1 1 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 1 1 0 0 1 1 1 0 0 1 0 0 1 1
- 1 0 0 1 1 0 1 1 0 1 1 0 0 1 1 0 0 1 1 0 1 1 1 0 0 1]
+100 3 (97, 9315)
+Took 25 iterations
+Reconstructed [0 0 0 1 0 0 1 1 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 1 1 0 0 1 1 1 0 0 1 1 1 0 1
+ 0 1 1 1 0 0 0 1 1 0 1 1 1 1 1 1 1 0 1 1 1 0 1 0 0 1 0 1 0 0 0 1 0 0 0 0 0
+ 0 0 1 0 0 1 1 1 0 0 0 1 0 0 0 1 0 0 1 0 1 0 0 0 0 1]
+From [0 0 0 1 0 0 1 1 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 1 1 0 0 1 1 1 0 0 1 1 1 0 1
+ 0 1 1 1 0 0 0 1 1 0 1 1 1 1 1 1 1 0 1 1 1 0 1 0 0 1 0 1 0 0 0 1 0 0 0 0 0
+ 0 0 1 0 0 1 1 1 0 0 0 1 0 0 0 1 0 0 1 0 1 0 0 0 0 1]
 True
-57 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
+50.6 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre>
 </div>
 </div>
@@ -15358,13 +15366,13 @@ The algorithm parameters:</p>
 <li><strong>verbose</strong>       - control verbosity.</li>
 </ul>
 <p><strong>Complexity:</strong>
-The algorithm loops for $t$ times:</p>
+The algorithm loops at most $n$ times:</p>
 <p>• get_first_x, complexity $\leq O\left(Nn+Nt^{2}\right)$.</p>
 <p>• get_supersequence_reconstruction_threshold, complexity $\leq O\left(nt^{3}\right)$.</p>
 <p>• get_u_a_i, complexity $\leq O\left(Nt\right)$.</p>
 <p>• get_maximal_number_of_common_supersequences, complexity $\leq O\left(nt^{2}\right)$.</p>
 <p>• concatenations, complexity $\leq\left(n\right)$.</p>
-<p>is summary we get a complexity of $O\left(Nnt+Nt^{3}+nt^{4}\right)$.</p>
+<p>is summary we get a complexity of $O\left(Nn^{2}+Nnt^{2}+n^{2}t^{3}\right)$.</p>
 
 </div>
 </div>
@@ -15533,14 +15541,14 @@ The algorithm loops for $t$ times:</p>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>n = 100, t = 3, q = 2, N = 10715
-Reconstructed [1 1 0 0 0 0 0 1 0 1 0 0 0 1 0 0 1 0 1 0 0 1 0 1 0 1 1 0 1 1 0 1 1 1 1 0 0
- 0 0 1 0 0 1 1 0 1 0 0 1 0 0 1 1 0 0 1 0 0 1 0 0 1 1 1 1 0 1 1 0 1 0 1 0 1
- 1 1 1 0 1 0 0 1 0 1 1 0 1 1 0 0 1 0 0 0 1 0 1 0 1 1]
-From [1 1 0 0 0 0 0 1 0 1 0 0 0 1 0 0 1 0 1 0 0 1 0 1 0 1 1 0 1 1 0 1 1 1 1 0 0
- 0 0 1 0 0 1 1 0 1 0 0 1 0 0 1 1 0 0 1 0 0 1 0 0 1 1 1 1 0 1 1 0 1 0 1 0 1
- 1 1 1 0 1 0 0 1 0 1 1 0 1 1 0 0 1 0 0 0 1 0 1 0 1 1]
+Reconstructed [1 1 1 0 0 1 0 0 0 1 1 0 0 0 1 1 0 1 0 1 1 1 0 1 0 1 0 0 1 1 0 0 1 0 0 0 0
+ 1 1 0 0 0 1 0 0 0 0 1 1 0 0 1 0 1 1 0 1 0 1 1 0 0 0 0 0 1 0 1 0 1 1 1 0 1
+ 1 1 0 1 1 1 0 0 1 0 0 0 0 1 0 1 0 1 1 1 0 0 0 0 1 0]
+From [1 1 1 0 0 1 0 0 0 1 1 0 0 0 1 1 0 1 0 1 1 1 0 1 0 1 0 0 1 1 0 0 1 0 0 0 0
+ 1 1 0 0 0 1 0 0 0 0 1 1 0 0 1 0 1 1 0 1 0 1 1 0 0 0 0 0 1 0 1 0 1 1 1 0 1
+ 1 1 0 1 1 1 0 0 1 0 0 0 0 1 0 1 0 1 1 1 0 0 0 0 1 0]
 True
-277 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
+275 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre>
 </div>
 </div>

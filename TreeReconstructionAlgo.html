@@ -15043,13 +15043,13 @@ The algorithm parameters:</p>
 <li><strong>verbose</strong>       - control verbosity.</li>
 </ul>
 <p><strong>Complexity:</strong></p>
-<p>The algorithm loops $t$ times, in each iteration:</p>
+<p>The algorithm loops at most $n$ times, in each iteration:</p>
 <p>• call get_ordering, complexity $\leq O\left(1\right)$.</p>
 <p>• call get_subsequence_reconstruction_threshold, complexity $\leq O\left(nt\right)$.</p>
 <p>• concatenate, complexity $\leq O\left(n\right)$.</p>
 <p>• call get_maximal_number_of_common_subsequences, complexity $\leq O\left(nt\right)$.</p>
 <p>• call get_u_a_i (with i==1), complexity $\leq O\left(1\right)$.</p>
-<p>getting us in total a complexity of $O\left(nt^{2}\right)$.</p>
+<p>getting us in total a complexity of $O\left(n^{2}t\right)$.</p>
 
 </div>
 </div>
@@ -15470,13 +15470,13 @@ The algorithm parameters:</p>
 <li><strong>verbose</strong>       - control verbosity.</li>
 </ul>
 <p><strong>Complexity:</strong>
-The algorithm loops for $t$ times:</p>
+The algorithm loops at most $n$ times:</p>
 <p>• get_first_x, complexity $\leq O\left(t^{2}\right)$.</p>
 <p>• get_supersequence_reconstruction_threshold, complexity $\leq O\left(nt^{3}\right)$.</p>
 <p>• get_u_a_i, complexity $\leq O\left(t\right)$.</p>
 <p>• get_maximal_number_of_common_supersequences, complexity $\leq O\left(nt^{2}\right)$.</p>
 <p>• concatenations, complexity $\leq\left(n\right)$.</p>
-<p>is summary we get a complexity of $O\left(nt^{4}\right)$.</p>
+<p>is summary we get a complexity of $O\left(n^{2}t^{3}\right)$.</p>
 
 </div>
 </div>
