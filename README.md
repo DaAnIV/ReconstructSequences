@@ -1,6 +1,78 @@
-# ReconstructSequences
-Efficient Reconstruction of Sequences from Their Subsequences or Supersequences
+# Reconstruct Sequences
+Efficient Reconstruction of Sequences from Their Subsequences or Supersequences based on Vladimir I. Levenshtein paper, Efficient Reconstruction of Sequences from Their Subsequences or Supersequences.
 
+## Tool Usage
+In the tool folder there are python scripts which contain implementations of the algorithms to reconstruct an original binary sequence from a list of sub/super-sequences.
+
+The sequences should be store as space seperated binary digit lines in a file. For example:
+```
+0 1 1 1 0 0 1
+1 1 0 1 0 1 0
+0 0 0 0 1 0 1
+``` 
+Or see the example files in the `tool/tests` directory.
+
+To run the tool using a matrix  
+```bash
+python main.py <n> <file>
+```
+where \<n\> is the original sequence length and \<file\> is the sequences file
+
+To run the tool using a trie
+```bash
+python main.py -t <n> <file>
+```
+where \<n\> is the original sequence length and \<file\> is the sequences file
+
+## Example usage
+
+Using the file `tool/tests/supersequences_10.txt` which is a list of supersequences of the original sequence
+```
+[0 1 1 0 1 0 0 1 0 1]
+```
+
+We run
+```
+python main.py 10 tests/supersequences_10.txt
+```
+to get
+```
+Constructing the matrix took 0.7100 ms.
+Reconstructing x from supersequences matrix
+Reconstruction took 11.9466 ms. Result:
+[1 0 0 0 1 0 0 1 1 1]
+```
+or using a trie
+```
+python main.py -t 10 tests/supersequences_10.txt
+```
+to get
+```
+Constructing the trie took 27.4424 ms.
+Reconstructing x from supersequences trie
+Reconstruction took 0.7927 ms. Result:
+[1 0 0 0 1 0 0 1 1 1]
+```
+
+You can also look at the `ConstructTests` notebook on how to create more tests with different arguments.
+
+## Requirments
+- numpy
+- jupyter - for running the notebooks
+
+You can use the `env.yml` to install a conda environment.
+
+
+## Jupyter Notebooks
+The two notebooks contain example of the algorithms flow and complexity analysis.
+
+Both notebooks reconstruct random sequences using Levenshtein algorithms.
+
+`BaseReconstructionAlgo.py` uses a np.array to store the sub/super-sequences which are used to construct the original sequence.
+
+`TreeReconstructionAlgo.py` uses a trie to store the sub/super-sequences which are used to construct the original sequence.
+
+## References
 Based on the article\
 Vladimir I. Levenshtein,\
 Efficient Reconstruction of Sequences from Their Subsequences or Supersequences,\
