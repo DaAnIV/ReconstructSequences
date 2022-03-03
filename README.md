@@ -1,6 +1,12 @@
 # Reconstruct Sequences
 Efficient Reconstruction of Sequences from Their Subsequences or Supersequences based on Vladimir I. Levenshtein paper, Efficient Reconstruction of Sequences from Their Subsequences or Supersequences.
 
+The algorithms presented in the paper and implemented here for the binary case can be used given enought subsequences or supersequences of the same length of some original sequence and knowledge of its original size to reconstruct it.
+
+There are two implementations of the reconstruction algorithms presented in Levenshtein paper for the binary case.
+- Implementation using an np.array to store the sub/super-sequences
+- Implementation using a ranked trie to store the sub/super-sequences
+
 ## Tool Usage
 In the tool folder there are python scripts which contain implementations of the algorithms to reconstruct an original binary sequence from a list of sub/super-sequences.
 
